@@ -1,7 +1,7 @@
 import { headers as getHeaders } from 'next/headers.js'
 import Image from 'next/image'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { use } from 'react'
 import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
@@ -15,44 +15,34 @@ export default async function HomePage() {
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
+  const todos = await payload.find({
+    collection: 'todos',
+    limit: 100,
+  })
+
   return (
-    <div className="home">
-      <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
-          />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
-        </div>
-      </div>
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
+    <div className="min-h-screen w-full bg-black text-white flex items-center justify-center">
+      <div className="flex flex-col items-center gap-6 text-center max-w-xl w-full px-4">
+        {user?.email && <p className="text-sm text-gray-400">Logged in as {user.email}</p>}
+
+        {todos.docs.map((todo) => (
+          <div key={todo.id} className="w-full border border-gray-700 rounded-lg p-6">
+            <h3 className="text-xl font-semibold mb-2">{todo.title}</h3>
+
+            <p className="text-gray-300 mb-2">{todo.description}</p>
+
+            <p className={`text-sm mb-2 ${todo.completed ? 'text-green-400' : 'text-red-400'}`}>
+              {todo.completed ? 'Completed' : 'Not Completed'}
+            </p>
+
+            <p className="text-xs text-gray-500">
+              Created: {new Date(todo.createdAt).toLocaleString()}
+            </p>
+            <p className="text-xs text-gray-500">
+              Updated: {new Date(todo.updatedAt).toLocaleString()}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   )

@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    Todos: Todo;
+    todos: Todo;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -79,7 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    Todos: TodosSelect<false> | TodosSelect<true>;
+    todos: TodosSelect<false> | TodosSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -163,7 +163,7 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Todos".
+ * via the `definition` "todos".
  */
 export interface Todo {
   id: string;
@@ -207,7 +207,7 @@ export interface PayloadLockedDocument {
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'Todos';
+        relationTo: 'todos';
         value: string | Todo;
       } | null);
   globalSlug?: string | null;
@@ -294,7 +294,7 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Todos_select".
+ * via the `definition` "todos_select".
  */
 export interface TodosSelect<T extends boolean = true> {
   title?: T;

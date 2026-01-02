@@ -1,7 +1,7 @@
 import { CollectionConfig } from 'payload'
 
 export const Todos: CollectionConfig = {
-  slug: 'Todos',
+  slug: 'todos',
   access: {
     read: () => true,
     create: () => true,
