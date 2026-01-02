@@ -3,19 +3,39 @@ import { CollectionConfig } from 'payload'
 export const Todos: CollectionConfig = {
   slug: 'todos',
   access: {
-    read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
+    read: ({ req }) => {
+      if (!req.user) return false
+
+      return {
+        user: {
+          equals: req.user.id,
+        },
+      }
+    },
+    create: ({ req }) => (req.user ? true : false),
+
+    update: ({ req }) => {
+      if (!req.user) return false
+
+      return {
+        user: {
+          equals: req.user.id,
+        },
+      }
+    },
+    delete: ({ req }) => {
+      if (!req.user) return false
+
+      return {
+        user: {
+          equals: req.user.id,
+        },
+      }
+    },
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'description',
+      name: 'task',
       type: 'text',
       required: true,
     },
@@ -25,19 +45,14 @@ export const Todos: CollectionConfig = {
       defaultValue: false,
     },
     {
-      name: 'media',
-      type: 'upload',
-      relationTo: 'media',
-    },
-    {
-      name: 'createdAt',
-      type: 'date',
-      defaultValue: new Date(),
-    },
-    {
-      name: 'updatedAt',
-      type: 'date',
-      defaultValue: new Date(),
+      name: 'user',
+      type: 'relationship',
+      relationTo: 'users',
+      required: true,
+      defaultValue: ({ user }) => {
+        if (!user) return undefined
+        return user.id
+      },
     },
   ],
 }

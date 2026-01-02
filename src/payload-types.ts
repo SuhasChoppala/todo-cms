@@ -167,12 +167,11 @@ export interface Media {
  */
 export interface Todo {
   id: string;
-  title: string;
-  description: string;
+  task: string;
   completed?: boolean | null;
-  media?: (string | null) | Media;
-  createdAt: string;
+  user: string | User;
   updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -297,12 +296,11 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "todos_select".
  */
 export interface TodosSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
+  task?: T;
   completed?: T;
-  media?: T;
-  createdAt?: T;
+  user?: T;
   updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

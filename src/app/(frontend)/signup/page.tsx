@@ -1,16 +1,15 @@
-import './styles.css'
-import { loginAction } from '../actions/loginAction'
 import Link from 'next/link'
+import { signupAction } from '../../actions/signupAction'
 
-export default async function HomePage() {
+export default function SignupPage() {
   return (
     <div className="min-h-screen w-full bg-black text-white py-12 px-4 flex items-center justify-center">
       <div className="w-full max-w-md">
         <div className="border border-gray-700 rounded-lg p-8 bg-gray-900/50">
-          <h1 className="text-3xl font-bold mb-2 text-center">Welcome Back</h1>
-          <p className="text-gray-400 text-center mb-8">Login to your account</p>
+          <h1 className="text-3xl font-bold mb-2 text-center">Create an account</h1>
+          <p className="text-gray-400 text-center mb-8">Sign Up</p>
 
-          <form action={loginAction} className="space-y-6">
+          <form action={signupAction} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm font-medium mb-2">
                 Email
@@ -39,14 +38,14 @@ export default async function HomePage() {
               type="submit"
               className="w-full bg-white text-black py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
             >
-              Login
+              Sign Up
             </button>
           </form>
 
           <p className="text-sm text-gray-400 text-center mt-6">
-            Don't have an account?{' '}
-            <Link href="/signup" className="text-white hover:underline">
-              Sign up
+            Already have an account?{' '}
+            <Link href="/" className="text-white hover:underline">
+              Login
             </Link>
           </p>
         </div>

@@ -8,7 +8,7 @@ const robotoMono = Roboto_Mono({
 })
 
 export const metadata = {
-  title: 'Payload Blank Template',
+  title: 'Task Management App',
   description: 'A blank template using Payload in a Next.js app.',
 }
 
