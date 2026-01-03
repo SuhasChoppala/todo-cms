@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { createTodo } from '@/app/actions/createTodo'
 import { logoutAction } from '@/app/actions/logoutAction'
+import { todoDeleteAction } from '@/app/actions/deleteTodo'
 
 type Todo = {
   id: string
@@ -91,7 +92,14 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
                   Edit
                 </Link>
                 <span className="text-gray-800">|</span>
-                <button className="flex-1 text-gray-400 hover:text-red-400 text-sm transition-colors underline">
+                <button
+                  onClick={() => {
+                    todoDeleteAction({
+                      todoID: todo.id,
+                    })
+                  }}
+                  className="flex-1 text-gray-400 hover:text-red-400 text-sm transition-colors underline"
+                >
                   Delete
                 </button>
               </div>
