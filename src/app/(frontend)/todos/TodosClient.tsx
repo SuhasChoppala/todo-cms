@@ -56,9 +56,9 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
           />
           <button
             type="submit"
-            className="bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 hover:bg-gray-800 transition-colors"
+            className="bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 hover:bg-gray-800 transition-colors h-[52px] flex items-center justify-center"
           >
-            <span className="text-2xl">+</span>
+            <span className="text-2xl leading-none">+</span>
           </button>
         </form>
 
@@ -69,7 +69,7 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
               key={todo.id}
               className="w-full border border-gray-700 rounded-lg p-6 hover:border-gray-600 transition-colors group"
             >
-              <div className="cursor-pointer block">
+              <div className="block">
                 <h3 className="text-xl font-semibold mb-2">{todo.task}</h3>
 
                 <p className={`text-sm mb-2 ${todo.completed ? 'text-green-400' : 'text-red-400'}`}>
