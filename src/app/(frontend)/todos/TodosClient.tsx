@@ -64,8 +64,11 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
         {/* Todos grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {todos.map((todo) => (
-            <Link href={`/todo/${todo.id}`} key={todo.id}>
-              <div className="w-full border border-gray-700 rounded-lg p-6 hover:border-gray-600 transition-colors cursor-pointer">
+            <div
+              key={todo.id}
+              className="w-full border border-gray-700 rounded-lg p-6 hover:border-gray-600 transition-colors group"
+            >
+              <div className="cursor-pointer block">
                 <h3 className="text-xl font-semibold mb-2">{todo.task}</h3>
 
                 <p className={`text-sm mb-2 ${todo.completed ? 'text-green-400' : 'text-red-400'}`}>
@@ -75,11 +78,24 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
                 <p className="text-xs text-gray-500">
                   Created: {new Date(todo.createdAt).toLocaleString()}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 mb-4">
                   Updated: {new Date(todo.updatedAt).toLocaleString()}
                 </p>
               </div>
-            </Link>
+
+              <div className="flex gap-3 pt-3 border-t border-gray-800">
+                <Link
+                  href={`/todo/${todo.id}`}
+                  className="flex-1 text-gray-400 hover:text-white text-sm transition-colors underline text-center"
+                >
+                  Edit
+                </Link>
+                <span className="text-gray-800">|</span>
+                <button className="flex-1 text-gray-400 hover:text-red-400 text-sm transition-colors underline">
+                  Delete
+                </button>
+              </div>
+            </div>
           ))}
         </div>
 
