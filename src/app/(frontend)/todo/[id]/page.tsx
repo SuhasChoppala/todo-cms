@@ -1,7 +1,7 @@
 'use server'
 import config from '@/payload.config'
 import { getPayload } from 'payload'
-import UpdateTodoPage from './UpdateTodo'
+import UpdateTodoPage from './UpdateTodoClient'
 
 export default async function SelectedTodo({ params }: { params: { id: string } }) {
   const payloadConfig = await config
