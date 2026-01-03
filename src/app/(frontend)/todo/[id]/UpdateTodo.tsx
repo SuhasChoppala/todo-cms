@@ -16,7 +16,7 @@ type TodoPageProps = {
   todoSelected: Todo
 }
 
-export default function TodoPage({ todoSelected }: TodoPageProps) {
+export default function UpdateTodoPage({ todoSelected }: TodoPageProps) {
   return (
     <div className="min-h-screen w-full bg-black text-white flex items-center justify-center px-4">
       <div className="max-w-md w-full">

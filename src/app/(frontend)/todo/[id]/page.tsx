@@ -1,7 +1,7 @@
 'use server'
 import config from '@/payload.config'
 import { getPayload } from 'payload'
-import TodoPage from './TodoPage'
+import UpdateTodoPage from './UpdateTodo'
 
 export default async function SelectedTodo({ params }: { params: { id: string } }) {
   const payloadConfig = await config
@@ -21,5 +21,5 @@ export default async function SelectedTodo({ params }: { params: { id: string } 
     userID: typeof todo.user === 'string' ? todo.user : todo.user?.id,
   }
 
-  return <TodoPage todoSelected={serializableTodo}></TodoPage>
+  return <UpdateTodoPage todoSelected={serializableTodo}></UpdateTodoPage>
 }
