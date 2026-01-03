@@ -1,3 +1,4 @@
+'use server'
 import payloadConfig from '@/payload.config'
 import { getPayload } from 'payload'
 import { headers as getHeaders } from 'next/headers'

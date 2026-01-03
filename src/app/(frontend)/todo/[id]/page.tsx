@@ -1,5 +1,7 @@
+'use server'
 import config from '@/payload.config'
 import { getPayload } from 'payload'
+import TodoPage from './TodoPage'
 
 export default async function SelectedTodo({ params }: { params: { id: string } }) {
   const payloadConfig = await config
@@ -10,10 +12,14 @@ export default async function SelectedTodo({ params }: { params: { id: string } 
     id: params.id,
   })
 
-  return (
-    <div>
-      <h1>{todo.task}</h1>
-      <p>{todo.completed ? 'Completed' : 'Not Completed'}</p>
-    </div>
-  )
+  const serializableTodo = {
+    id: todo.id,
+    task: todo.task,
+    completed: Boolean(todo.completed),
+    createdAt: todo.createdAt.toString(),
+    updatedAt: todo.updatedAt.toString(),
+    userID: typeof todo.user === 'string' ? todo.user : todo.user?.id,
+  }
+
+  return <TodoPage todoSelected={serializableTodo}></TodoPage>
 }
