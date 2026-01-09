@@ -3,13 +3,14 @@ import config from '@/payload.config'
 import { getPayload } from 'payload'
 import UpdateTodoPage from './UpdateTodoClient'
 
-export default async function SelectedTodo({ params }: { params: { id: string } }) {
+export default async function SelectedTodo({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
   const todo = await payload.findByID({
     collection: 'todos',
-    id: params.id,
+    id,
   })
 
   const serializableTodo = {

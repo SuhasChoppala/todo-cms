@@ -44,7 +44,7 @@ export default async function HomePage() {
           </form>
 
           <p className="text-sm text-gray-400 text-center mt-6">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-white hover:underline">
               Sign up
             </Link>
