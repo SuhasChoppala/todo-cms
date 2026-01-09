@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { createTodo } from '@/app/actions/createTodo'
 import { logoutAction } from '@/app/actions/logoutAction'
 import { todoDeleteAction } from '@/app/actions/deleteTodo'
+import { useState } from 'react'
 
 type Todo = {
   id: string
@@ -24,6 +25,7 @@ type TodosClientProps = {
 }
 
 export default function TodosClient({ user, todos }: TodosClientProps) {
+  const [error, setError] = useState<string | null>(null)
   return (
     <div className="min-h-screen w-full bg-black text-white py-12 px-4">
       <div className="max-w-6xl mx-auto">
@@ -41,10 +43,14 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
 
         {/* Task input section */}
         <form
-          action={(formData) => {
-            createTodo({
+          action={async (formData) => {
+            const result = await createTodo({
               task: formData.get('task') as string,
             })
+
+            if (result?.serverError || result?.validationErrors) {
+              setError(result.serverError ?? 'Something went wrong')
+            }
           }}
           className="flex items-center gap-2 mb-12 max-w-2xl mx-auto"
         >
@@ -62,6 +68,19 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
           </button>
         </form>
 
+        {error && (
+          <div className="mb-12 max-w-2xl mx-auto rounded-lg border border-red-500 bg-red-500/10 text-red-400 relative">
+            <span className="block text-center py-3 px-4">{error}</span>
+            <button
+              onClick={() => setError(null)}
+              className="absolute -top-2.5 -right-2.5 bg-red-500 text-red-950 hover:bg-red-400 transition-colors w-7 h-7 flex items-center justify-center rounded-full font-bold text-sm"
+              aria-label="Close error message"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* Todos grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
           {todos.map((todo) => (
@@ -76,12 +95,8 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
                   {todo.completed ? 'Completed' : 'Not Completed'}
                 </p>
 
-                <p className="text-xs text-gray-500">
-                  Created: {new Date(todo.createdAt).toLocaleString()}
-                </p>
-                <p className="text-xs text-gray-500 mb-4">
-                  Updated: {new Date(todo.updatedAt).toLocaleString()}
-                </p>
+                <p className="text-xs text-gray-500">Created: {todo.createdAt}</p>
+                <p className="text-xs text-gray-500 mb-4">Updated: {todo.updatedAt}</p>
               </div>
 
               <div className="flex gap-3 pt-3 border-t border-gray-800">

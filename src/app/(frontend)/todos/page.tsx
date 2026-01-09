@@ -30,8 +30,8 @@ export default async function TodosPage() {
     id: todo.id,
     task: todo.task,
     completed: Boolean(todo.completed),
-    createdAt: todo.createdAt.toString(),
-    updatedAt: todo.updatedAt.toString(),
+    createdAt: new Date(todo.createdAt).toISOString(),
+    updatedAt: new Date(todo.updatedAt).toISOString(),
   }))
 
   return <TodosClient user={serializedUser} todos={serializableTodos} />

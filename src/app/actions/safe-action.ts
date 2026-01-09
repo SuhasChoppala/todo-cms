@@ -1,4 +1,8 @@
 import { createSafeActionClient } from 'next-safe-action'
 
 // Create the client with default options.
-export const actionClient = createSafeActionClient()
+export const actionClient = createSafeActionClient({
+  handleServerError(error) {
+    return error.message
+  },
+})

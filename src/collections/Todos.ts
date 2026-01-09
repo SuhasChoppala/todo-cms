@@ -1,4 +1,5 @@
 import { CollectionConfig } from 'payload'
+import { APIError } from 'payload'
 
 export const Todos: CollectionConfig = {
   slug: 'todos',
@@ -33,6 +34,36 @@ export const Todos: CollectionConfig = {
       }
     },
   },
+
+  hooks: {
+    beforeChange: [
+      async ({ operation, req }) => {
+        if (operation != 'create') {
+          return
+        }
+
+        const user = req.user
+
+        if (user?.isPremium) {
+          return
+        }
+
+        const { totalDocs } = await req.payload.count({
+          collection: 'todos',
+          where: {
+            user: {
+              equals: user?.id,
+            },
+          },
+        })
+
+        if (totalDocs >= 3) {
+          throw new APIError('Free users can only create up to 3 todos. Upgrade to Premium.', 403)
+        }
+      },
+    ],
+  },
+
   fields: [
     {
       name: 'task',

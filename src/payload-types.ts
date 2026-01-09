@@ -124,6 +124,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  isPremium?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -256,6 +257,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  isPremium?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
