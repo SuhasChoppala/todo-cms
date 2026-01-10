@@ -4,7 +4,7 @@ import { APIError, getPayload } from 'payload'
 import { headers as getHeaders } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { actionClient } from './safe-action'
-import { success, z } from 'zod'
+import { z } from 'zod'
 
 const inputSchema = z.object({
   task: z.string().min(1),
