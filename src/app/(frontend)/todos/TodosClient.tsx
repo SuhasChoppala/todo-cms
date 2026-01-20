@@ -48,8 +48,10 @@ export default function TodosClient({ user, todos }: TodosClientProps) {
               task: formData.get('task') as string,
             })
 
-            if (result?.serverError || result?.validationErrors) {
-              setError(result.serverError ?? 'Something went wrong')
+            if (result?.serverError) {
+              setError(result.serverError)
+            } else if (result?.validationErrors) {
+              setError('Please enter a task name to continue')
             }
           }}
           className="flex items-center gap-2 mb-12 max-w-2xl mx-auto"

@@ -1,10 +1,8 @@
 'use server'
-import payloadConfig from '@/payload.config'
-import { APIError, getPayload } from 'payload'
-import { headers as getHeaders } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 import { actionClient } from './safe-action'
 import { z } from 'zod'
+import { withAuth } from '../auth/withAuth'
 
 const inputSchema = z.object({
   task: z.string().min(1),
@@ -13,25 +11,18 @@ const inputSchema = z.object({
 export const createTodo = actionClient
   .inputSchema(inputSchema)
   .action(async ({ parsedInput: { task } }) => {
-    const headers = await getHeaders()
-    const payload = await getPayload({ config: payloadConfig })
+    return withAuth(async ({ user, payload }) => {
+      await payload.create({
+        collection: 'todos',
+        data: {
+          task,
+          user: user.id,
+        },
 
-    const { user } = await payload.auth({ headers })
+        user,
+      })
+      revalidatePath('/todos')
 
-    if (!user) {
-      throw new APIError('You must be logged in to create a todo')
-    }
-
-    await payload.create({
-      collection: 'todos',
-      data: {
-        task,
-        user: user.id,
-      },
-
-      user,
+      return { success: true }
     })
-    revalidatePath('/todos')
-
-    return { success: true }
   })
